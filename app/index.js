@@ -1,13 +1,29 @@
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
-import { useEffect, useCallback, useState } from 'react'
+import { useEffect, useCallback, useState, createContext, useContext } from 'react'
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { connectToDatabase, createTables, insertarFila, leerNotas } from '../db/db';
 import { Nota } from '../components/Nota';
 import { Link } from 'expo-router';
+import MenuDesplegableNota from '../components/MenuDesplegableNota';
 
 
-
+export const MenuNotaContexto = createContext()
+export const MenuNotaProvider = ({ children }) => {
+  const [visible, setVisible] = useState(false)
+  const [position, setPosition] = useState({ posX: 0, posY: 0 })
+  return (
+    < MenuNotaContexto.Provider
+      value={
+        {
+          visible, setVisible,
+          position, setPosition
+        }
+      } >
+      {children}
+    </MenuNotaContexto.Provider >
+  )
+}
 
 export default function Index() {
 
@@ -45,15 +61,18 @@ export default function Index() {
           </Pressable>
         </Link>
       </View>
-      <FlatList
-        data={notas}
-        style={styles.listado}
-        numColumns={2}
-        renderItem={({ item }) =>
-          <Nota id={item.id} titulo={item.titulo} contenido={item.contenido} />
-        }
-        keyExtractor={item => item.id}
-      />
+      <MenuNotaProvider>
+        <FlatList
+          data={notas}
+          style={styles.listado}
+          numColumns={2}
+          renderItem={({ item }) =>
+            <Nota id={item.id} titulo={item.titulo} contenido={item.contenido} />
+          }
+          keyExtractor={item => item.id}
+        />
+        <MenuDesplegableNota />
+      </MenuNotaProvider>
     </View >
   );
 }

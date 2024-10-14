@@ -11,8 +11,6 @@ export default function Index() {
 }
 
 const estiloBasico = StyleSheet.create({
-
-
     container: {
         flex: 1,
         marginTop: Constants.statusBarHeight,
