@@ -7,12 +7,12 @@ const { height, width } = Dimensions.get('window');
 
 export function Nota({ id, titulo, contenido }) {
 
-    const { visible, setVisible, setPosition } = useContext(MenuNotaContexto)
+    const { visible, setVisible, setPosition, setNotaPulsada } = useContext(MenuNotaContexto)
 
     function mostrarMenu(e) {
         setVisible(true)
         setPosition({ posX: e.nativeEvent.pageX, posY: e.nativeEvent.pageY })
-        console.log(e)
+        setNotaPulsada({ id: id, titulo: titulo, contenido: contenido })
     }
 
     return (

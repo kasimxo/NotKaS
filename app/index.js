@@ -5,6 +5,7 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { connectToDatabase, createTables, insertarFila, leerNotas } from '../db/db';
 import { Nota } from '../components/Nota';
 import { Link } from 'expo-router';
+import { ListadoNotas } from '../components/ListadoNotas';
 import MenuDesplegableNota from '../components/MenuDesplegableNota';
 
 
@@ -12,12 +13,16 @@ export const MenuNotaContexto = createContext()
 export const MenuNotaProvider = ({ children }) => {
   const [visible, setVisible] = useState(false)
   const [position, setPosition] = useState({ posX: 0, posY: 0 })
+  const [notaPulsada, setNotaPulsada] = useState()
+  const [notas, setNotas] = useState()
   return (
     < MenuNotaContexto.Provider
       value={
         {
           visible, setVisible,
-          position, setPosition
+          position, setPosition,
+          notaPulsada, setNotaPulsada,
+          notas, setNotas
         }
       } >
       {children}
@@ -27,27 +32,7 @@ export const MenuNotaProvider = ({ children }) => {
 
 export default function Index() {
 
-  const [notas, setNotas] = useState()
 
-  const loadData = useCallback(async () => {
-    try {
-      await createTables(connectToDatabase)
-      recuperarNotas(connectToDatabase)
-    } catch (error) {
-      console.error(error)
-    }
-  }, [])
-
-  useEffect(() => {
-    loadData()
-  }, [loadData])
-
-
-  async function recuperarNotas() {
-    var resultado = await leerNotas(connectToDatabase)
-
-    setNotas(resultado)
-  }
 
 
   return (
@@ -62,15 +47,8 @@ export default function Index() {
         </Link>
       </View>
       <MenuNotaProvider>
-        <FlatList
-          data={notas}
-          style={styles.listado}
-          numColumns={2}
-          renderItem={({ item }) =>
-            <Nota id={item.id} titulo={item.titulo} contenido={item.contenido} />
-          }
-          keyExtractor={item => item.id}
-        />
+        <ListadoNotas />
+
         <MenuDesplegableNota />
       </MenuNotaProvider>
     </View >

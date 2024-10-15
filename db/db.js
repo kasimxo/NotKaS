@@ -36,6 +36,17 @@ export const insertarFila = async (db, titulo, contenido) => {
     }
 }
 
+export const eliminarNota = async (db, id) => {
+    const statement = `DELETE FROM notas_guardadas WHERE id = ${id};`
+    console.log('Vamos a eliminar la nota con id ', id)
+    try {
+        await db.runAsync(statement)
+        console.log('Se ha eliminado la nota con id ', id)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 export const actualizarNota = async (db, id, titulo, contenido) => {
     const statement = `
     UPDATE notas_guardadas
