@@ -8,7 +8,7 @@ import { Nota } from './Nota';
 
 export function ListadoNotas() {
 
-    const { notas, setNotas } = useContext(MenuNotaContexto)
+    const { notas, setNotas, keyword } = useContext(MenuNotaContexto)
 
     const loadData = useCallback(async () => {
         try {
@@ -30,11 +30,13 @@ export function ListadoNotas() {
 
     return (
         <FlatList
-            data={notas}
+            data={notas !== undefined ? notas.filter((nota) => {
+                return nota.titulo.toLowerCase().includes(keyword.toLowerCase())
+            }) : []}
             style={styles.listado}
             numColumns={2}
             renderItem={({ item }) =>
-                <Nota id={item.id} titulo={item.titulo} contenido={item.contenido} />
+                <Nota id={item.id} titulo={item.titulo} contenido={item.contenido} fecha={item.fecha} />
             }
             keyExtractor={item => item.id}
         />

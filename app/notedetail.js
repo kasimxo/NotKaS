@@ -8,10 +8,11 @@ import { actualizarNota, connectToDatabase } from '../db/db';
 export default function DetailNote() {
     const router = useRouter();
     const params = useLocalSearchParams();
-    const { id, tituloOriginal, contenidoOriginal } = params;
+    const { id, tituloOriginal, contenidoOriginal, fechaCreacion } = params;
 
     const [titulo, setTitulo] = useState('')
     const [contenido, setContenido] = useState('')
+    const date = fechaCreacion
 
     useEffect(() => {
         setTitulo(tituloOriginal)
@@ -32,6 +33,7 @@ export default function DetailNote() {
                 style={estilosCreacion.creacionTitulo}
                 value={titulo}
             />
+            <Text style={estilosCreacion.creacionFecha}>Fecha: {new Date(Number.parseInt(fechaCreacion)).toLocaleString()}</Text>
             <TextInput
                 placeholder={'Contenido'}
                 multiline={true}
@@ -56,6 +58,9 @@ export default function DetailNote() {
 }
 
 const estilosCreacion = StyleSheet.create({
+    creacionFecha: {
+        width: '100%',
+    },
     creacionTitulo: {
         fontSize: 25,
         width: '100%',

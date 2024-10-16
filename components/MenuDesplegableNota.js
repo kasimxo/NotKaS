@@ -15,6 +15,7 @@ export default function MenuDesplegableNota() {
             backgroundColor: 'white',
             padding: 20,
             borderRadius: 20,
+            gap: 10,
             position: 'absolute',
             left: position.posX - 20,
             top: position.posY - 50,
@@ -31,6 +32,9 @@ export default function MenuDesplegableNota() {
         },
         oculto: {
             display: 'none',
+        },
+        texto: {
+            fontSize: 15,
         },
     })
 
@@ -50,12 +54,12 @@ export default function MenuDesplegableNota() {
                 <Pressable
                     onPress={() => { router.navigate({ pathname: '/notedetail', params: { id: notaPulsada.id, tituloOriginal: notaPulsada.titulo, contenidoOriginal: notaPulsada.contenido } }) }}
                 >
-                    <Text >Editar</Text>
+                    <Text style={estilosMenu.texto}>Editar</Text>
                 </Pressable>
                 <Pressable
                     onPress={eliminarNotaPeticion}
                 >
-                    <Text >Eliminar</Text>
+                    <Text style={estilosMenu.texto}>Eliminar</Text>
                 </Pressable>
             </View>
         </Pressable>

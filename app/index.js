@@ -1,13 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import { useEffect, useCallback, useState, createContext, useContext } from 'react'
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { connectToDatabase, createTables, insertarFila, leerNotas } from '../db/db';
+import { FlatList, Pressable, StyleSheet, Text, View, TextInput } from 'react-native';
 import { Nota } from '../components/Nota';
 import { Link } from 'expo-router';
 import { ListadoNotas } from '../components/ListadoNotas';
 import MenuDesplegableNota from '../components/MenuDesplegableNota';
-
+import { BarraBusqueda } from '../components/BarraBusqueda';
 
 export const MenuNotaContexto = createContext()
 export const MenuNotaProvider = ({ children }) => {
@@ -15,6 +14,7 @@ export const MenuNotaProvider = ({ children }) => {
   const [position, setPosition] = useState({ posX: 0, posY: 0 })
   const [notaPulsada, setNotaPulsada] = useState()
   const [notas, setNotas] = useState()
+  const [keyword, setKeyword] = useState('')
   return (
     < MenuNotaContexto.Provider
       value={
@@ -22,7 +22,8 @@ export const MenuNotaProvider = ({ children }) => {
           visible, setVisible,
           position, setPosition,
           notaPulsada, setNotaPulsada,
-          notas, setNotas
+          notas, setNotas,
+          keyword, setKeyword
         }
       } >
       {children}
@@ -31,9 +32,6 @@ export const MenuNotaProvider = ({ children }) => {
 }
 
 export default function Index() {
-
-
-
 
   return (
     <View style={styles.container}>
@@ -47,8 +45,8 @@ export default function Index() {
         </Link>
       </View>
       <MenuNotaProvider>
+        <BarraBusqueda />
         <ListadoNotas />
-
         <MenuDesplegableNota />
       </MenuNotaProvider>
     </View >
@@ -56,6 +54,20 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
+  buscarContainer: {
+
+    width: '100%',
+    alignContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  barraBusqueda: {
+    backgroundColor: '#ffffff',
+    borderColor: 'black',
+    color: 'black',
+  },
   container: {
     flex: 1,
     marginTop: Constants.statusBarHeight,

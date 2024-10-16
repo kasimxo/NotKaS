@@ -1,12 +1,16 @@
 import { Link, router } from "expo-router";
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { View, Text, Pressable, StyleSheet, TextInput } from "react-native";
 import { connectToDatabase, insertarFila } from "../db/db";
 
 export default function CreateNota() {
 
+
     const [titulo, setTitulo] = useState('')
     const [contenido, setContenido] = useState('')
+
+    const date = Date.now()
+
 
     function guardarNota() {
         //Crear una nueva fila en la base de datos
@@ -14,7 +18,7 @@ export default function CreateNota() {
         if (titulo.length < 1 && contenido.length < 1) {
             return
         }
-        var exito = insertarFila(connectToDatabase, titulo, contenido)
+        var exito = insertarFila(connectToDatabase, titulo, contenido, date)
         //recuperarNotas()
         if (exito) {
             router.navigate('/')
@@ -29,6 +33,7 @@ export default function CreateNota() {
                 onChangeText={(texto) => { setTitulo(texto) }}
                 style={estilosCreacion.creacionTitulo}
             />
+            <Text style={estilosCreacion.creacionFecha}>Fecha: {new Date(date).toLocaleString()}</Text>
             <TextInput
                 placeholder={'Contenido'}
                 multiline={true}
@@ -36,6 +41,7 @@ export default function CreateNota() {
                 style={estilosCreacion.creacionContenido}
 
             />
+
             <View style={estilosCreacion.contenedorBotones}>
                 <Link href={'/'} asChild>
                     <Pressable style={estilosCreacion.botonCreacion}>
@@ -60,7 +66,9 @@ const estilosCreacion = StyleSheet.create({
     creacionContenido: {
         width: '100%',
     },
-
+    creacionFecha: {
+        width: '100%',
+    },
     creacionContainer: {
         flex: 1,
         width: '100%',
