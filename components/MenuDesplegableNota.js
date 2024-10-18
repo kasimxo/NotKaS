@@ -2,7 +2,6 @@ import { View, Text, StyleSheet, Pressable, Dimensions } from 'react-native'
 import { useContext } from 'react'
 import { router } from 'expo-router';
 import { MenuNotaContexto } from '../app/index'
-import { connectToDatabase, eliminarNota, leerNotas } from '../db/db';
 
 const { height, width } = Dimensions.get('window');
 
@@ -39,10 +38,12 @@ export default function MenuDesplegableNota() {
     })
 
     async function eliminarNotaPeticion() {
+        /*
         eliminarNota(connectToDatabase, notaPulsada.id)
         setVisible(false)
         var resultado = await leerNotas(connectToDatabase)
         setNotas(resultado)
+        */
     }
 
 

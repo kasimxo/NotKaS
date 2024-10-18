@@ -1,7 +1,6 @@
 import { Link, router } from "expo-router";
 import { useState, useContext } from 'react'
 import { View, Text, Pressable, StyleSheet, TextInput } from "react-native";
-import { connectToDatabase, insertarFila } from "../db/db";
 
 export default function CreateNota() {
 
@@ -18,9 +17,9 @@ export default function CreateNota() {
         if (titulo.length < 1 && contenido.length < 1) {
             return
         }
-        var exito = insertarFila(connectToDatabase, titulo, contenido, date)
+        //var exito = insertarFila(connectToDatabase, titulo, contenido, date)
         //recuperarNotas()
-        if (exito) {
+        if (true) {
             router.navigate('/')
         }
     }

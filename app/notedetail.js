@@ -2,7 +2,6 @@ import { View, Text, Pressable, TextInput, StyleSheet } from 'react-native'
 import { Link, router } from 'expo-router'
 import { useState, useEffect } from 'react'
 import { useNavigation, useRouter, useLocalSearchParams } from "expo-router";
-import { actualizarNota, connectToDatabase } from '../db/db';
 
 
 export default function DetailNote() {
@@ -20,7 +19,7 @@ export default function DetailNote() {
     }, [])
 
     function guardarCambiosNota() {
-        actualizarNota(connectToDatabase, id, titulo, contenido)
+        //actualizarNota(connectToDatabase, id, titulo, contenido)
         router.navigate('/')
     }
 

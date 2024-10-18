@@ -3,7 +3,6 @@ import { router } from "expo-router";
 import Constants from 'expo-constants';
 import { useEffect, useCallback, useState, createContext, useContext } from 'react'
 import { MenuNotaContexto } from './../app/index';
-import { connectToDatabase, createTables, insertarFila, leerNotas } from '../db/db';
 import { Nota } from './Nota';
 
 export function ListadoNotas() {
@@ -12,15 +11,15 @@ export function ListadoNotas() {
 
     const loadData = useCallback(async () => {
         try {
-            await createTables(connectToDatabase)
-            recuperarNotas(connectToDatabase)
+            //await createTables(connectToDatabase)
+            //recuperarNotas(connectToDatabase)
         } catch (error) {
             console.error(error)
         }
     }, [])
 
     useEffect(() => {
-        loadData()
+        //loadData()
     }, [loadData])
 
     async function recuperarNotas() {
