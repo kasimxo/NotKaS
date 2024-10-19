@@ -4,6 +4,7 @@ import Constants from 'expo-constants';
 import { useEffect, useCallback, useState, createContext, useContext } from 'react'
 import { MenuNotaContexto } from './../app/index';
 import { Nota } from './Nota';
+import { recuperarNotasGET } from '../api_calls/api';
 
 export function ListadoNotas() {
 
@@ -11,19 +12,19 @@ export function ListadoNotas() {
 
     const loadData = useCallback(async () => {
         try {
-            //await createTables(connectToDatabase)
-            //recuperarNotas(connectToDatabase)
+            recuperarNotas()
         } catch (error) {
             console.error(error)
         }
     }, [])
 
     useEffect(() => {
-        //loadData()
+        loadData()
     }, [loadData])
 
     async function recuperarNotas() {
-        var resultado = await leerNotas(connectToDatabase)
+        var resultado = await recuperarNotasGET()
+        console.log('Notas a renderizar', resultado)
         setNotas(resultado)
     }
 

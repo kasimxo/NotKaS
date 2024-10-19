@@ -7,6 +7,7 @@ import { Link } from 'expo-router';
 import { ListadoNotas } from '../components/ListadoNotas';
 import MenuDesplegableNota from '../components/MenuDesplegableNota';
 import { BarraBusqueda } from '../components/BarraBusqueda';
+import { recuperarNotasGET } from '../api_calls/api';
 
 export const MenuNotaContexto = createContext()
 export const MenuNotaProvider = ({ children }) => {
@@ -33,29 +34,9 @@ export const MenuNotaProvider = ({ children }) => {
 
 export default function Index() {
 
-    async function peticionNotas() {
-        console.log('Peticion a servidor')
-        const url = "http://localhost:3000/notas";
-        var contenido
-        try {
-            var response = fetch(url, {
-                method: "GET", // *GET, POST, PUT, DELETE, etc.
-                mode: "cors", // no-cors, *cors, same-origin
-                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: "same-origin", // include, *same-origin, omit
-                headers: {
-                    "Content-Type": "text/plain",
-                    "Access-Control-Allow-Origin": "*"
-                },
-                redirect: "follow", // manual, *follow, error
-                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-
-            }).then(data => {
-                console.log(data)
-            })
-        } catch (error) {
-            console.error(error.message);
-        }
+    function peticionNotas() {
+        var respuesta = recuperarNotasGET()
+        //setNotas(respuesta)
     }
 
 
@@ -70,10 +51,12 @@ export default function Index() {
                     </Pressable>
                 </Link>
             </View>
-            <Pressable onPress={() => {
-                console.log('Clic en boton')
-                peticionNotas()
-            }}>
+            <Pressable
+                style={styles.boton}
+                onPress={() => {
+                    console.log('Clic en boton')
+                    peticionNotas()
+                }}>
                 <Text>Recuperar Info</Text>
             </Pressable>
             <MenuNotaProvider>
