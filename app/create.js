@@ -1,6 +1,7 @@
 import { Link, router } from "expo-router";
 import { useState, useContext } from 'react'
 import { View, Text, Pressable, StyleSheet, TextInput } from "react-native";
+import { crearNotaPOST } from "../api_calls/api";
 
 export default function CreateNota() {
 
@@ -17,6 +18,7 @@ export default function CreateNota() {
         if (titulo.length < 1 && contenido.length < 1) {
             return
         }
+        crearNotaPOST(titulo, contenido, date)
         //var exito = insertarFila(connectToDatabase, titulo, contenido, date)
         //recuperarNotas()
         if (true) {
